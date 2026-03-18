@@ -1,0 +1,344 @@
+:root {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-github: #2dba4e;
+  --accent-azure: #0078d4;
+  --accent-loop: #884bdf; /* Loop Purple */
+  --accent-other: #ff9800;
+  --grid-gap: 20px;
+  --border-radius: 8px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background-color: #181818;
+  border-bottom: 1px solid #333;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+}
+
+header h1 i {
+  color: var(--text-primary);
+  margin-right: 10px;
+}
+
+.controls .btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 10px;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn.primary {
+  background-color: var(--accent-azure);
+  color: white;
+}
+
+.btn.secondary {
+  background-color: #333;
+  color: white;
+}
+
+/* Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* Fixed 6 columns */
+  grid-auto-rows: 80px;
+  gap: var(--grid-gap);
+  padding: 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Slot Styles for Empty Grid Cells */
+.grid-slot {
+  background-color: transparent; /* Invisible by default */
+  border-radius: var(--border-radius);
+  border: 1px dashed transparent;
+  width: 100%;
+  height: 100%;
+}
+
+body.edit-mode .grid-slot {
+  border-color: #333; /* Visible in edit mode */
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+body.edit-mode .grid-slot.drag-over {
+  background-color: rgba(0, 120, 212, 0.2);
+  border-color: var(--accent-azure);
+}
+
+/* Card Styles */
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text-primary);
+  border: 1px solid #333;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  border-color: #444;
+}
+
+.card.size-small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.card.size-medium {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.card.size-large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+@media (max-width: 1200px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card.size-medium {
+    grid-column: span 2 !important; /* Force span on mobile */
+  }
+  .card.size-large {
+    grid-column: span 2 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .card.size-medium,
+  .card.size-large {
+    grid-column: unset; 
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.card-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.card.github .card-icon {
+  background-color: rgba(45, 186, 78, 0.1);
+  color: var(--accent-github);
+}
+
+.card.azure .card-icon {
+  background-color: rgba(0, 120, 212, 0.1);
+  color: var(--accent-azure);
+}
+
+.card.loop .card-icon {
+  background-color: rgba(136, 75, 223, 0.1);
+  color: var(--accent-loop);
+}
+
+.card.other .card-icon {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: var(--accent-other);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-content {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+
+.card-actions {
+  display: none; /* Visible in edit mode */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  gap: 8px; /* Added gap between buttons */
+}
+
+/* Action Button Styles */
+.action-btn {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.delete-btn {
+  color: #ff6b6b;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+.resize-btn {
+  color: #74c0fc;
+}
+
+.resize-btn:hover {
+  background: rgba(0, 120, 212, 0.3);
+}
+
+.edit-btn {
+  color: #69db7c;
+}
+
+.edit-btn:hover {
+  background: rgba(45, 186, 78, 0.3);
+}
+
+/* Edit Mode styling */
+body.edit-mode .card {
+  border-style: dashed;
+  cursor: grab;
+  animation: shake 0.3s infinite alternate ease-in-out; 
+  /* Shake animation optional/annoying, maybe just different border color */
+  animation: none; 
+  border-color: var(--accent-azure);
+}
+
+body.edit-mode .card:hover {
+  transform: none;
+}
+
+body.edit-mode .card-actions {
+  display: flex;
+}
+
+/* Modal */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 100; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.7); 
+}
+
+.modal-content {
+  background-color: #252526;
+  margin: 15% auto; 
+  padding: 30px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  width: 400px;
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: white;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-azure);
+}

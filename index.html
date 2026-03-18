@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-terminal"></i> Dev Dashboard</h1>
+        <div class="controls">
+            <button id="add-btn" class="btn primary"><i class="fa-solid fa-plus"></i> Add Link</button>
+            <button id="edit-mode-btn" class="btn secondary"><i class="fa-solid fa-pen-to-square"></i> Edit Layout</button>
+        </div>
+    </header>
+
+    <main id="grid-container" class="grid-container">
+        <!-- Cards will be injected here by JS -->
+    </main>
+
+    <!-- Modal for adding new links -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Bookmark</h2>
+            <form id="add-form">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" required placeholder="e.g., My Repo">
+                </div>
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="url" id="url" required placeholder="https://github.com/...">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="github">GitHub</option>
+                        <option value="azure">Azure</option>
+                        <option value="loop">Microsoft Loop</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="size">Card Size</label>
+                    <select id="size">
+                        <option value="small">Small (1x1)</option>
+                        <option value="medium">Medium (2x1)</option>
+                        <option value="large">Large (2x2)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn primary">Save Bookmark</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
